@@ -2,22 +2,24 @@ package com.event.booking.dao;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.event.booking.model.User;
 import com.event.booking.response.Response;
+import com.event.booking.response.Validator;
 
 @Repository
 public class EventBookingDao implements IEventBookingDao {
 
 	@Autowired
 	private SessionFactory factory;
-	@Autowired
-	Response response;
 
 	private Session getSession() {
 		Session session = null;
@@ -30,15 +32,24 @@ public class EventBookingDao implements IEventBookingDao {
 	}
 
 	@Override
-	public Response add(Object object) throws Response  {
+	public void add(Object object) throws Response {
+
 		
 		getSession().save(object);
-		response.setStatus("add success : "+ object.getClass());
-		response.setMessage("operation success "+ object.getClass());
-		response.setTxDate(new SimpleDateFormat("dd/mm/yyyy HH:mm:ss a").format(new Date()));
-		response.setResponseData(object);
-		return response;
+		
+	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Object> getAll(Object clazz) {
+		
+		return getSession().createCriteria(clazz.getClass()).list();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Object> getAllByCriteria(Object clazz, String field, String criteria) {
+		return getSession().createCriteria(clazz.getClass()).add(Restrictions.eq(field, criteria)).list();
 	}
 
 }

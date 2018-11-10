@@ -16,6 +16,9 @@
 	<jee:jndi-lookup id="dataSource" jndi-name="jdbc/test" expected-type="javax.sql.DataSource" />
 
 	<bean id ="response" class="com.event.booking.response.Response"/>
+	<bean id ="user" class="com.event.booking.model.User"/>
+	
+	
 	
 	<bean id="sessionFactory"
 		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
@@ -23,6 +26,10 @@
 		<property name="annotatedClasses">
 			<list>
 				<value>com.event.booking.model.User</value>
+				<value>com.event.booking.model.Event</value>
+				<value>com.event.booking.model.Image</value>
+				<value>com.event.booking.model.Comment</value>
+				
 			</list>
 		</property>
 		<property name="hibernateProperties">

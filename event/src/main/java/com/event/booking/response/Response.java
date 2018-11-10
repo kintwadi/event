@@ -1,5 +1,6 @@
 package com.event.booking.response;
 
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -18,6 +19,7 @@ public class Response extends Exception{
 	private String txDate;
 	private String view;
 	private Object responseData;
+	private List<Object>reponseDataList;
 	private static Logger logger = null;
 
 
@@ -63,11 +65,20 @@ public class Response extends Exception{
 	public void setResponseData(Object responseData) {
 		this.responseData = responseData;
 	}
+	
+	public List<Object> getReponseDataList() {
+		return reponseDataList;
+	}
+	public void setReponseDataList(List<Object> reponseDataList) {
+		this.reponseDataList = reponseDataList;
+	}
 	@Override
 	public String toString() {
 		return "Response [status=" + status + ", message=" + message + ", txDate=" + txDate + ", view=" + view
-				+ ", responseData=" + responseData + "]";
+				+ ", responseData=" + responseData + ", reponseDataList=" + reponseDataList + "]";
 	}
+	
+	
 	
 	public void setLogger(String className,String message, String level) {
 		

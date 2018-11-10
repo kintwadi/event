@@ -4,18 +4,16 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "USER")
-public class User implements Serializable{
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+public class User extends UserDetails implements Serializable{
 	
 	private static final long serialVersionUID = 6305492665756801120L;
-	@Id
-	@GeneratedValue
-	private long id;
 	private String userName;
 	private String password;
 	@Column(unique = true)
@@ -27,21 +25,6 @@ public class User implements Serializable{
 		
 	}
 	
-	public User(long id, String userName, String password, String email) {
-		super();
-		this.id = id;
-		this.userName = userName;
-		this.password = password;
-		this.email = email;
-	}
-
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
 
 	public String getUserName() {
 		return userName;
@@ -67,10 +50,12 @@ public class User implements Serializable{
 		this.email = email;
 	}
 
+
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", userName=" + userName + ", password=" + password + ", email=" + email + "]";
+		return "User [userName=" + userName + ", password=" + password + ", email=" + email + "]";
 	}
+
 	
 	
 	

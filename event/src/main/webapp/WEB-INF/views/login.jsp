@@ -11,9 +11,10 @@
 <title>Insert title here</title>
 </head>
 <body>
-<spring:url value="/login" var ="login"/>
 
-<form action="${login}" method="post">
+<spring:url value="/register_user" var="register_user"/>
+
+<%-- <form action="${login}" method="post">
 
   user name:<br><input type="text" name="userName" ><br>
   Email:<br><input type="text" name="email"><br>
@@ -22,7 +23,14 @@
   
  
   
-</form> 
+</form>  --%>
+
+<form:form method="post" modelAttribute="user" action="${register_user}">
+		user name:<br><form:input path="userName" type="text" /> <!-- bind to user.name-->
+		Email:<br><form:input  type="text" path="email"/>
+		Password:<br><form:input  type="password"  path="password"/>
+		<input type="submit" value="login">
+	</form:form>
 
  ${msg}
 <script>

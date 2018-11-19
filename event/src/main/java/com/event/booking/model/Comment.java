@@ -1,14 +1,14 @@
 package com.event.booking.model;
 
 import java.io.Serializable;
-import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -28,12 +28,14 @@ public class Comment  implements Serializable{
 	@Temporal(TemporalType.TIMESTAMP)
 	private java.util.Calendar calendarTimestamp;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    @JoinColumn(name="eventId", nullable=false)
+	private Event eventComment;
+	
+	@ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     @JoinColumn(name="userId", nullable=false)
+	
 	private User userComment;
-
-	@OneToMany(mappedBy="eventComment")
-	private List<Event >event;
 	
 	public Comment() {
 		
@@ -62,6 +64,25 @@ public class Comment  implements Serializable{
 	public void setCalendarTimestamp(java.util.Calendar calendarTimestamp) {
 		this.calendarTimestamp = calendarTimestamp;
 	}
+	
+	public long getCommentId() {
+		return commentId;
+	}
+
+	public void setCommentId(long commentId) {
+		this.commentId = commentId;
+	}
+
+	public Event getEventComment() {
+		return eventComment;
+	}
+
+	public void setEventComment(Event eventComment) {
+		this.eventComment = eventComment;
+	}
+
+	
+	
 
 	public User getUserComment() {
 		return userComment;
@@ -71,23 +92,13 @@ public class Comment  implements Serializable{
 		this.userComment = userComment;
 	}
 
-	public List<Event> getEvent() {
-		return event;
-	}
-
-	public void setEvent(List<Event> event) {
-		this.event = event;
-	}
-
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
-
 	@Override
 	public String toString() {
 		return "Comment [commentId=" + commentId + ", comment=" + comment + ", calendarTimestamp=" + calendarTimestamp
-				+ ", userComment=" + userComment + ", event=" + event + "]";
+				+ ", eventComment=" + eventComment + ", userComment=" + userComment + "]";
 	}
+
+	
 	
 	
 	

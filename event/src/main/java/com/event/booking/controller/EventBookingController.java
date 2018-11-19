@@ -1,5 +1,6 @@
 package com.event.booking.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -8,10 +9,19 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
+import com.event.booking.model.Comment;
+import com.event.booking.model.Event;
 import com.event.booking.model.User;
 import com.event.booking.response.Response;
 import com.event.booking.service.EventBookingService;
@@ -19,53 +29,106 @@ import com.event.booking.service.EventBookingService;
 @Controller
 @RequestMapping("/")
 public class EventBookingController {
-	
+
 	@Autowired
 	private EventBookingService service;
 	@Autowired
 	private User user;
 
+	@Autowired
+	private Comment comment;
+
 	@RequestMapping("/")
-	public String initializer( Model model,HttpSession session) {
+	public String initializer( @ModelAttribute User user,Model model,HttpSession session) {
+
 
 		return service.getInitPage().getView();
 	}
-	
-	/**
-	 * é apenas um teste 
-	 * @return
-	 */
-	@RequestMapping("/login")
-	public String addUser(HttpServletRequest request, Model model,HttpSession session) {
-		
-		service.extractParrams(user, request);
+
+	// Users
+	@PostMapping("/register_user")
+	public String registerUser(@RequestBody User user, Model model) {
+
 		Response response = service.addUser(user); 
 		model.addAttribute("msg", response.getMessage());
-		System.out.println(response.getMessage());
 		return response.getView();
 	}
-	
-	@RequestMapping("/getUsers")
-	@ResponseBody
-	public List <Object>getUsers(HttpServletRequest request, Model model,HttpSession session) {
-		
-		Response users = service.getUsers(user);
-		users.getReponseDataList().forEach(System.out::println);
-		return users.getReponseDataList();
+
+	@PostMapping("/update_user")
+	public String updateUser(@RequestBody User user,Model model) {
+
+		Response response = service.updateUser(user);
+		model.addAttribute("msg", response.getMessage());
+		return response.getView();
 	}
-	
-	@RequestMapping("/getUser")
-	@ResponseBody
-	public List <Object>getUser(@RequestParam("userName") String userName) {
-		
-		Response users = service.getUser(user, userName, userName);
-		users.getReponseDataList().forEach(System.out::println);
-		return users.getReponseDataList();
+	@PostMapping("/remove_user")
+	public String removeUser(@RequestBody User user,Model model) {
+
+		Response response = service.removeUser(user);
+		model.addAttribute("msg", response.getMessage());
+		return response.getView();
 	}
-	
-	
-	
+
+	@GetMapping("/get_users")
+	@ResponseBody
+	public List <Object>getUsers(HttpSession session ) {
 
 	
+		return service.getUsers(user).getReponseDataList();
+	}
+
+
+	@GetMapping("/getUser_by_id/{id}")
+	@ResponseBody
+	public User getUserById(@PathVariable long id) {
+
+		return (User)service.getUser(user, id).getResponseData();
+	}
+
+	@GetMapping("/get_user/{email:.+}")// allow .com extension on email
+	@ResponseBody
+	public User getUserByEmail(@PathVariable String email) {
+
+		Response response = service.getElementByFieldName("User", "email", email);
+		System.out.println(response.getResponseData().toString());
+		
+		return (User)service.getElementByFieldName("User", "email", email).getResponseData();
+	}
+
+	//Events
+	@PostMapping("/register_event")
+	public String registerEvent(@RequestBody Event event, Model model) {
+
+		/*comment.setId(1);
+		user.setId(1);
+		comment.setUserComment(user);
+		 */
+		//event.setEventComment(comment);
+		Response response = service.addEvent(user,event);
+		model.addAttribute("msg", response.getStatus());
+		return response.getStatus();
+	}
+	@PostMapping("/update_event")
+	public String updateEvent(@RequestBody Event event, Model model) {
+
+		Response response = service.addUser(user); 
+		model.addAttribute("msg", response.getStatus());
+		return response.getView();
+	}
+
+	@PostMapping("/delete_event")
+	public String deleteEvent(@RequestBody Event event, Model model) {
+
+		Response response = service.addUser(user); 
+		model.addAttribute("msg", response.getStatus());
+		return response.getView();
+	}
+
+
+
+
+
+
+
 
 }

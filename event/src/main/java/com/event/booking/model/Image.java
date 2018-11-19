@@ -2,7 +2,9 @@ package com.event.booking.model;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -19,7 +21,7 @@ public class Image  implements Serializable{
 	private long id;
 	private String imageLink;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     @JoinColumn(name="eventId", nullable=false)
 	private Event eventImage;
 	
@@ -38,6 +40,12 @@ public class Image  implements Serializable{
 	public void setImageLink(String imageLink) {
 		this.imageLink = imageLink;
 	}
+	@Override
+	public String toString() {
+		return "Image [id=" + id + ", imageLink=" + imageLink + ", eventImage=" + eventImage + "]";
+	}
+	
+	
 	
 	
 	

@@ -1,14 +1,21 @@
 package com.event.booking.model;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.ManyToMany;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.OneToMany;
+
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @MappedSuperclass
 public class EventDetails {
@@ -21,18 +28,26 @@ public class EventDetails {
 	private String street;
 	private String reference;
 	private double lat;
-	private double longe;
+	private double longe; 
 	
-	@OneToMany(mappedBy="eventImage")
-	private List<Image >image;
+	
+	@ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL,mappedBy = "events")
 
-	@ManyToOne
-    @JoinColumn(name="commentId", nullable=false)
-	private Comment eventComment;
+	private Set<User> users = new HashSet<>();
+	
+	@OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL,mappedBy="eventImage")
+	@Fetch(value = FetchMode.SUBSELECT)
+	private List<Image >images;
+	
+	@OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL,mappedBy="eventComment")
+	@Fetch(value = FetchMode.SUBSELECT)
+	private List<Comment> eventComments;
 	
 	public EventDetails() {
 		
 	}
+	
+	
 
 	public long getEventId() {
 		return eventId;
@@ -90,28 +105,67 @@ public class EventDetails {
 		this.longe = longe;
 	}
 
-	public List<Image> getImage() {
-		return image;
-	}
+	
 
-	public void setImage(List<Image> image) {
-		this.image = image;
-	}
-
-	public Comment getEventComment() {
+	/*public Comment getEventComment() {
 		return eventComment;
 	}
 
 	public void setEventComment(Comment eventComment) {
 		this.eventComment = eventComment;
+	}*/
+	
+	
+
+	public Set<User> getUsers() {
+		return users;
 	}
+
+
+
+	public void setUsers(Set<User> users) {
+		this.users = users;
+	}
+
+
+
+	public List<Image> getImages() {
+		return images;
+	}
+
+
+
+	public void setImages(List<Image> images) {
+		this.images = images;
+	}
+
+
+
+	public List<Comment> getEventComments() {
+		return eventComments;
+	}
+
+
+
+	public void setEventComments(List<Comment> eventComments) {
+		this.eventComments = eventComments;
+	}
+
+
 
 	@Override
 	public String toString() {
 		return "EventDetails [eventId=" + eventId + ", country=" + country + ", city=" + city + ", street=" + street
-				+ ", reference=" + reference + ", lat=" + lat + ", longe=" + longe + ", image=" + image
-				+ ", eventComment=" + eventComment + "]";
+				+ ", reference=" + reference + ", lat=" + lat + ", longe=" + longe + ", users=" + users + ", images="
+				+ images + ", eventComments=" + eventComments + "]";
 	}
-	
+
+
+
+
+
+
+
+
 
 }

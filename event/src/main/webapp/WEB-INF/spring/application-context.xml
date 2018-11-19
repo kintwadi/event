@@ -17,6 +17,9 @@
 
 	<bean id ="response" class="com.event.booking.response.Response"/>
 	<bean id ="user" class="com.event.booking.model.User"/>
+	<bean id ="comment" class="com.event.booking.model.Comment"/>
+	<bean id ="event" class="com.event.booking.model.Event"/>
+	<bean id ="eventDetails" class="com.event.booking.model.EventDetails"/>
 	
 	
 	

@@ -49,6 +49,8 @@ public class User extends UserDetails implements Serializable{
 	public void setEmail(String email) {
 		this.email = email;
 	}
+	
+
 
 
 	@Override

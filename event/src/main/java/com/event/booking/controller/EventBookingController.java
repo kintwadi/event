@@ -123,6 +123,14 @@ public class EventBookingController {
 		model.addAttribute("msg", response.getStatus());
 		return response.getView();
 	}
+	
+	
+	
+	@RequestMapping("/gethome")
+	public String goHome() {
+		
+		return "home";
+	}
 
 
 

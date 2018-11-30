@@ -1,35 +1,22 @@
-
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ page session="false"%>
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
 <body>
 
-<spring:url value="/register_user" var="register_user"/>
-
-<%-- <form action="${login}" method="post">
-
-  user name:<br><input type="text" name="userName" ><br>
-  Email:<br><input type="text" name="email"><br>
-  Password:<br><input type="text" name="password"><br>
-  <input type="submit" value="login">
-  
- 
-  
-</form>  --%>
 <hr>
 <br>
-<input type="button" onclick="listUsers()" value ="buscar usuarios">
+<input type="button"  style ="color:red"onclick="listUsers()" value ="buscar usuarios home">
 
  <div id = "conteudo"></div>
-<script>
+ 
+ 
+ 
+ <script>
 
 
 
@@ -51,7 +38,7 @@ function listUsers() {
 	  	    	    conteudo.innerHTML +=" <br> email: "+ data[i]["email"] ;
 	  	    	    conteudo.innerHTML +="<br> password: "+data[i]["password"] ;
 	  	    	    conteudo.innerHTML +="<br> telef: "+data[i]["cellphone"] ;
-	  	    	    conteudo.innerHTML +="<br> país: "+ data[i]["country"] ;
+	  	    	    conteudo.innerHTML +="<br> paÃ­s: "+ data[i]["country"] ;
 	  	    	    conteudo.innerHTML +="<br> provincia: "+ data[i]["city"] ;
 	  	    	    conteudo.innerHTML += "<br> cidade: "+data[i]["street"] ;
 	  	    	  	conteudo.innerHTML += "<hr>" ;
@@ -68,8 +55,7 @@ function listUsers() {
 
 
 </script>
-
-
+ 
 
 </body>
 </html>

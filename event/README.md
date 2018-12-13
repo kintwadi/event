@@ -3,14 +3,14 @@ How to lookup data source from JNDI using spring
 
 # Server.xml
 
-<Resource name="jdbc/javatechie" 
-      global="jdbc/javatechie" 
+<Resource name="jdbc/test" 
+      global="jdbc/test" 
       auth="Container" 
       type="javax.sql.DataSource" 
       driverClassName="com.mysql.jdbc.Driver" 
-      url="jdbc:mysql://localhost:3306/javatechie" 
-      username="root" 
-      password="Password" 
+      url="jdbc:mysql://localhost:3306/test" 
+      username="" 
+      password="" 
       
       maxActive="100" 
       maxIdle="20" 
@@ -19,13 +19,13 @@ How to lookup data source from JNDI using spring
 	  
 # context.xml:	  
 
-<ResourceLink name="jdbc/javatechie"
-                	global="jdbc/javatechie"
+<ResourceLink name="jdbc/test"
+                	global="jdbc/test"
                     auth="Container"
                     type="javax.sql.DataSource" />
 					
 # Config:
 
-<jee:jndi-lookup id="dataSource" jndi-name="jdbc/javatechie"
+<jee:jndi-lookup id="dataSource" jndi-name="jdbc/test"
    			expected-type="javax.sql.DataSource" />					
 					

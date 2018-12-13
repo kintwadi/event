@@ -1,9 +1,7 @@
 package com.event.booking.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,10 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 
 import com.event.booking.model.Comment;
 import com.event.booking.model.Event;
@@ -96,16 +91,14 @@ public class EventBookingController {
 	}
 
 	//Events
-	@PostMapping("/register_event")
-	public String registerEvent(@RequestBody Event event, Model model) {
+	@PostMapping("/register_event/{eventOwnerEmail:.+}")
+	@ResponseBody
+	public String registerEvent(@RequestBody Event event,@PathVariable("eventOwnerEmail")String eventOwnerEmail, Model model) {
 
-		/*comment.setId(1);
-		user.setId(1);
-		comment.setUserComment(user);
-		 */
-		//event.setEventComment(comment);
+		System.out.println("eventOwnerEmail: "+ eventOwnerEmail);
+		System.out.println("event: "+event.toString());
+		user.setEmail(eventOwnerEmail);
 		Response response = service.addEvent(user,event);
-		model.addAttribute("msg", response.getStatus());
 		return response.getStatus();
 	}
 	@PostMapping("/update_event")

@@ -2,9 +2,7 @@ package com.event.booking.model;
 
 import java.io.Serializable;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -12,6 +10,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 
 @Entity
@@ -28,14 +28,10 @@ public class Comment  implements Serializable{
 	@Temporal(TemporalType.TIMESTAMP)
 	private java.util.Calendar calendarTimestamp;
 	
-	@ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
-    @JoinColumn(name="eventId", nullable=false)
-	private Event eventComment;
 	
-	@ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
-    @JoinColumn(name="userId", nullable=false)
-	
-	private User userComment;
+	@ManyToOne
+	@JoinColumn(name="event_id")
+	private Event event;
 	
 	public Comment() {
 		
@@ -73,30 +69,14 @@ public class Comment  implements Serializable{
 		this.commentId = commentId;
 	}
 
-	public Event getEventComment() {
-		return eventComment;
-	}
 
-	public void setEventComment(Event eventComment) {
-		this.eventComment = eventComment;
+	public void setEvent(Event event) {
+		this.event = event;
 	}
-
-	
 	
 
-	public User getUserComment() {
-		return userComment;
-	}
 
-	public void setUserComment(User userComment) {
-		this.userComment = userComment;
-	}
-
-	@Override
-	public String toString() {
-		return "Comment [commentId=" + commentId + ", comment=" + comment + ", calendarTimestamp=" + calendarTimestamp
-				+ ", eventComment=" + eventComment + ", userComment=" + userComment + "]";
-	}
+	
 
 	
 	

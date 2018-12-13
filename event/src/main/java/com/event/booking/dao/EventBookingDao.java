@@ -92,7 +92,7 @@ public class EventBookingDao implements IEventBookingDao {
 		
 		List list = getSession().createCriteria(clazz.getClass()).add(Restrictions.eq("email", email)).list();
 		
-		return list.get(0);
+		return list!= null ? list.get(0):  null;
 		
 	}
 

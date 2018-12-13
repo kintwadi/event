@@ -1,14 +1,14 @@
 package com.event.booking.model;
 
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.OneToMany;
 
@@ -31,18 +31,20 @@ public class EventDetails {
 	private double longe; 
 	
 	
-	@ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL,mappedBy = "events")
-
-	private Set<User> users = new HashSet<>();
+	@ManyToOne
+	@JoinColumn(name="user_id")
+	private User user;
 	
-	@OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL,mappedBy="eventImage")
-	@Fetch(value = FetchMode.SUBSELECT)
-	private List<Image >images;
+	                                                            
+	@OneToMany(mappedBy ="event", fetch=FetchType.EAGER, cascade=CascadeType.ALL)      
+	@Fetch(value = FetchMode.SUBSELECT)                                               
+	private List<Comment>comments = new ArrayList<>();                                
 	
-	@OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL,mappedBy="eventComment")
-	@Fetch(value = FetchMode.SUBSELECT)
-	private List<Comment> eventComments;
-	
+	                                                            
+	@OneToMany(mappedBy ="event", fetch=FetchType.EAGER, cascade=CascadeType.ALL)      
+	@Fetch(value = FetchMode.SUBSELECT)                                               
+	private List<Image>images = new ArrayList<>();  
+    
 	public EventDetails() {
 		
 	}
@@ -105,50 +107,16 @@ public class EventDetails {
 		this.longe = longe;
 	}
 
-	
 
-	/*public Comment getEventComment() {
-		return eventComment;
-	}
 
-	public void setEventComment(Comment eventComment) {
-		this.eventComment = eventComment;
-	}*/
-	
-	
-
-	public Set<User> getUsers() {
-		return users;
+	public User getUser() {
+		return user;
 	}
 
 
 
-	public void setUsers(Set<User> users) {
-		this.users = users;
-	}
-
-
-
-	public List<Image> getImages() {
-		return images;
-	}
-
-
-
-	public void setImages(List<Image> images) {
-		this.images = images;
-	}
-
-
-
-	public List<Comment> getEventComments() {
-		return eventComments;
-	}
-
-
-
-	public void setEventComments(List<Comment> eventComments) {
-		this.eventComments = eventComments;
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 
@@ -156,11 +124,15 @@ public class EventDetails {
 	@Override
 	public String toString() {
 		return "EventDetails [eventId=" + eventId + ", country=" + country + ", city=" + city + ", street=" + street
-				+ ", reference=" + reference + ", lat=" + lat + ", longe=" + longe + ", users=" + users + ", images="
-				+ images + ", eventComments=" + eventComments + "]";
+				+ ", reference=" + reference + ", lat=" + lat + ", longe=" + longe + ", user=" + user + ", comments="
+				+ comments + ", images=" + images + "]";
 	}
+	
+	
 
 
+
+	
 
 
 

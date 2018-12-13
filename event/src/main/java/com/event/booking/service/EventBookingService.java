@@ -1,8 +1,11 @@
 package com.event.booking.service;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
@@ -137,7 +140,7 @@ public class EventBookingService {
 
 	private String getMessage(String key) {
 
-		return  env.getProperty("email.error");	
+		return  env.getProperty(key);	
 	}
 
 	public Response getUsers(User user){
@@ -183,10 +186,19 @@ public class EventBookingService {
 		}
 		try {
 			
-			//dao.getById(user, user.getId());
+			user = (User) dao.getByEmail(user, user.getEmail());
 			
-			//dao.add(event.getEventComment());
-			dao.add(event);
+			List<Event> events = new ArrayList<>();
+			
+			
+			events.add(event);
+			
+			user.setEvents(events);
+			
+			event.setUser(user);
+			
+			dao.add(event);	
+			
 			response.setStatus("event added");
 			
 		} catch (Response e) {

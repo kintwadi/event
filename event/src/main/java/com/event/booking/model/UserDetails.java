@@ -1,16 +1,12 @@
 package com.event.booking.model;
 
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.OneToMany;
 
@@ -30,20 +26,10 @@ public class UserDetails {
 	private String city;
 	private String street;
 	
-	@OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL,mappedBy="userComment")
-	@Fetch(value = FetchMode.SUBSELECT)
-	private List<Comment >comment;
 	
-
-	@ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+	@OneToMany(mappedBy ="user", fetch=FetchType.EAGER, cascade=CascadeType.ALL)
 	@Fetch(value = FetchMode.SUBSELECT)
-    @JoinTable(
-        name = "USER_EVENT", 
-        joinColumns = {@JoinColumn(name="userId")},
-        inverseJoinColumns = {@JoinColumn(name = "eventId") }
-    )
-	
-    private Set<Event> events = new HashSet<>();
+	private List<Event>events = new ArrayList<>();
 	
 	
 	public UserDetails(long userId, String cellphone, String country, String city, String street) {
@@ -95,27 +81,35 @@ public class UserDetails {
 	public void setUserId(long userId) {
 		this.userId = userId;
 	}
-	public List<Comment> getComment() {
-		return comment;
-	}
-	public void setComment(List<Comment> comment) {
-		this.comment = comment;
-	}
-	
-
-	public Set<Event> getEvents() {
+	public List<Event> getEvents() {
 		return events;
 	}
-
-
-	public void setEvents(Set<Event> events) {
+	public void setEvents(List<Event> events) {
 		this.events = events;
 	}
 	@Override
 	public String toString() {
 		return "UserDetails [userId=" + userId + ", cellphone=" + cellphone + ", country=" + country + ", city=" + city
-				+ ", street=" + street + ", comment=" + comment + ", events=" + events + "]";
+				+ ", street=" + street + ", events=" + events + "]";
 	}
+	
+	
+	
+
+	
+	
+
+	
+	
+	
+
+
+	
+	
+	
+	
+	
+	
 
 	
 	

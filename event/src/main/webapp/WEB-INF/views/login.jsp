@@ -9,21 +9,14 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
+
+
 </head>
 <body>
 
 <spring:url value="/register_user" var="register_user"/>
 
-<%-- <form action="${login}" method="post">
 
-  user name:<br><input type="text" name="userName" ><br>
-  Email:<br><input type="text" name="email"><br>
-  Password:<br><input type="text" name="password"><br>
-  <input type="submit" value="login">
-  
- 
-  
-</form>  --%>
 <hr>
 <br>
 <input type="button" onclick="listUsers()" value ="buscar usuarios">

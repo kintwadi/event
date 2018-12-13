@@ -13,6 +13,7 @@ import javax.persistence.OneToMany;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @MappedSuperclass
@@ -26,7 +27,7 @@ public class UserDetails {
 	private String city;
 	private String street;
 	
-	
+	@JsonIgnore
 	@OneToMany(mappedBy ="user", fetch=FetchType.EAGER, cascade=CascadeType.ALL)
 	@Fetch(value = FetchMode.SUBSELECT)
 	private List<Event>events = new ArrayList<>();

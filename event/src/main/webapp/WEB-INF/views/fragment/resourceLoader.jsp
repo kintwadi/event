@@ -5,6 +5,11 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 
+<link rel="stylesheet" href="/resources/bootstrap4.1.1/bootstrap3/css/bootstrap.min.css">
+<script src="/webapp/resources/bootstrap4.1.1/bootstrap3/js/bootstrap.min.js" ></script>
+<script src="/resources/bootstrap4.1.1/js/popper.min.js" ></script>
+<script src="/resources/bootstrap4.1.1/js/jquery-3.2.1.slim.min.js" ></script>
+
 </head>
 <body>
 

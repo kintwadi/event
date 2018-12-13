@@ -1,6 +1,10 @@
 package com.event.booking.service;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.Month;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
@@ -190,6 +194,20 @@ public class EventBookingService {
 			
 			List<Event> events = new ArrayList<>();
 			
+			LocalDateTime currentTime = LocalDateTime.now();
+			Month month = currentTime.getMonth();
+		    int day = currentTime.getDayOfMonth();
+		    int hour =currentTime.getHour();
+		    int minuts = currentTime.getMinute();
+		    int seconds = currentTime.getSecond();
+		    Date date = Date.from(currentTime.toLocalDate().atStartOfDay(ZoneId.systemDefault()).toInstant());
+		    
+			event.setDate(date);
+			event.setDay(String.valueOf(day));
+			event.setMonth(month.name());
+			event.setHour(String.valueOf(hour));
+			event.setMinuts(String.valueOf(minuts));
+			event.setSeconds(String.valueOf(seconds));
 			
 			events.add(event);
 			

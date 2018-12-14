@@ -7,12 +7,16 @@ import java.time.Month;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
+
+import org.apache.commons.collections.map.HashedMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -22,6 +26,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 import com.event.booking.dao.IEventBookingDao;
 import com.event.booking.model.Event;
+import com.event.booking.model.JoinEvent;
 import com.event.booking.model.User;
 import com.event.booking.response.Response;
 import com.event.booking.response.Validator;
@@ -193,22 +198,9 @@ public class EventBookingService {
 			user = (User) dao.getByEmail(user, user.getEmail());
 			
 			List<Event> events = new ArrayList<>();
-			
-			LocalDateTime currentTime = LocalDateTime.now();
-			Month month = currentTime.getMonth();
-		    int day = currentTime.getDayOfMonth();
-		    int hour =currentTime.getHour();
-		    int minuts = currentTime.getMinute();
-		    int seconds = currentTime.getSecond();
-		    Date date = Date.from(currentTime.toLocalDate().atStartOfDay(ZoneId.systemDefault()).toInstant());
-		    
-			event.setDate(date);
-			event.setDay(String.valueOf(day));
-			event.setMonth(month.name());
-			event.setHour(String.valueOf(hour));
-			event.setMinuts(String.valueOf(minuts));
-			event.setSeconds(String.valueOf(seconds));
-			
+		
+			buildTransactionPedriod(event);// fill date, day ,hour etc...
+		
 			events.add(event);
 			
 			user.setEvents(events);
@@ -246,6 +238,10 @@ public class EventBookingService {
 		
 	}
 	
+	public Object getById(Object object,long id) {
+		return  dao.getById(object, id);
+	}
+	
 	
 	private boolean userExist(User user, String eventOwnerEmail) {
 		
@@ -253,6 +249,67 @@ public class EventBookingService {
 	
 		return user != null ? true : false;
 	}
+	
+	public Response joinEnvent(JoinEvent joinEvent) {
+		
+		try {
+			
+			buildTransactionPedriod(joinEvent);
+			dao.add(joinEvent);
+			response.setMessage("event joined");
+			
+		} catch (Response e) {
+			
+			System.out.println("error joining event: "+ e.getMessage());
+			response.setMessage(e.getMessage());
+			return response;
+		}
+		return response;
+	}
+	
+	
+	
+	private void buildTransactionPedriod(Object object){
+		
+		LocalDateTime currentTime = LocalDateTime.now();
+		
+		Month month = currentTime.getMonth();
+	    int day = currentTime.getDayOfMonth();
+	    int hour =currentTime.getHour();
+	    int minuts = currentTime.getMinute();
+	    int seconds = currentTime.getSecond();
+	    Date date = Date.from(currentTime.toLocalDate().atStartOfDay(ZoneId.systemDefault()).toInstant());
+	    
+	    if(object instanceof Event) {
+	    	
+	    	Event event = (Event) object;
+	    	event.setDate(date);
+	    	event.setMonth(month.name());
+	    	event.setDay(String.valueOf(day));
+			
+	    	event.setHour(String.valueOf(hour));
+	    	event.setMinuts(String.valueOf(minuts));
+	    	event.setSeconds(String.valueOf(seconds));
+	    	
+	    }
+	    if(object instanceof JoinEvent) {
+	    	
+	    	JoinEvent joinEvent = (JoinEvent) object;
+	    	joinEvent.setDate(date);
+	    	joinEvent.setMonth(month.name());
+	    	joinEvent.setDay(String.valueOf(day));
+			
+	    	joinEvent.setHour(String.valueOf(hour));
+	    	joinEvent.setMinuts(String.valueOf(minuts));
+	    	joinEvent.setSeconds(String.valueOf(seconds));
+	    	
+	    }
+		
+		
+	}
+	
+	
+	
 	
 	
 	

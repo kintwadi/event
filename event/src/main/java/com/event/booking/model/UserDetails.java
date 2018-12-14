@@ -14,7 +14,6 @@ import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @MappedSuperclass
 public class UserDetails {
@@ -31,6 +30,20 @@ public class UserDetails {
 	@OneToMany(mappedBy ="user", fetch=FetchType.EAGER, cascade=CascadeType.ALL)
 	@Fetch(value = FetchMode.SUBSELECT)
 	private List<Event>events = new ArrayList<>();
+	
+	@JsonIgnore
+	@OneToMany(mappedBy ="user", fetch=FetchType.EAGER, cascade=CascadeType.ALL)      
+	@Fetch(value = FetchMode.SUBSELECT)                                               
+	private List<Comment>comments = new ArrayList<>();
+	@JsonIgnore
+	@OneToMany(mappedBy ="user", fetch=FetchType.EAGER, cascade=CascadeType.ALL)      
+	@Fetch(value = FetchMode.SUBSELECT)                                               
+	private List<Like>likes = new ArrayList<>();
+	
+	@JsonIgnore
+	@OneToMany(mappedBy ="user", fetch=FetchType.EAGER, cascade=CascadeType.ALL)
+	@Fetch(value = FetchMode.SUBSELECT)
+	private List<JoinEvent>joiningEvent = new ArrayList<>();
 	
 	
 	public UserDetails(long userId, String cellphone, String country, String city, String street) {
@@ -88,10 +101,31 @@ public class UserDetails {
 	public void setEvents(List<Event> events) {
 		this.events = events;
 	}
+	
+	public List<JoinEvent> getJoiningEvent() {
+		return joiningEvent;
+	}
+	public void setJoiningEvent(List<JoinEvent> joiningEvent) {
+		this.joiningEvent = joiningEvent;
+	}
+	
+	public List<Comment> getComments() {
+		return comments;
+	}
+	public void setComments(List<Comment> comments) {
+		this.comments = comments;
+	}
+	public List<Like> getLikes() {
+		return likes;
+	}
+	public void setLikes(List<Like> likes) {
+		this.likes = likes;
+	}
 	@Override
 	public String toString() {
 		return "UserDetails [userId=" + userId + ", cellphone=" + cellphone + ", country=" + country + ", city=" + city
-				+ ", street=" + street + ", events=" + events + "]";
+				+ ", street=" + street + ", events=" + events + ", comments=" + comments + ", likes=" + likes
+				+ ", joiningEvent=" + joiningEvent + "]";
 	}
 	
 	

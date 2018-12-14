@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.event.booking.model.Comment;
 import com.event.booking.model.Event;
+import com.event.booking.model.JoinEvent;
 import com.event.booking.model.User;
 import com.event.booking.response.Response;
 import com.event.booking.service.EventBookingService;
@@ -29,6 +30,8 @@ public class EventBookingController {
 	private EventBookingService service;
 	@Autowired
 	private User user;
+	@Autowired
+	private Event event;
 
 	@Autowired
 	private Comment comment;
@@ -116,6 +119,33 @@ public class EventBookingController {
 		model.addAttribute("msg", response.getStatus());
 		return response.getView();
 	}
+	
+	@PostMapping("/join_event/{userId}/{eventId}")
+	@ResponseBody
+	public String joinEvent(@RequestBody JoinEvent joinEvent,@PathVariable long userId, @PathVariable long eventId) {
+		
+		
+		user = (User)service.getById(user, userId);
+		event = (Event)service.getById(event, eventId);
+		joinEvent.addRelationShip(user).addRelationShip(event);		
+		Response response = service.joinEnvent(joinEvent);
+		
+		return response.getMessage();
+	}
+	
+	@PostMapping("/book_event/{userId}/{eventId}")
+	@ResponseBody
+	public String bookEvent(@RequestBody JoinEvent joinEvent,@PathVariable long userId, @PathVariable long eventId) {
+		
+		
+		user = (User)service.getById(user, userId);
+		event = (Event)service.getById(event, eventId);
+		joinEvent.addRelationShip(user).addRelationShip(event);		
+		Response response = service.joinEnvent(joinEvent);
+		
+		return response.getMessage();
+	}
+	
 	
 	
 	

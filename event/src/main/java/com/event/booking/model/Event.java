@@ -17,7 +17,7 @@ public class Event extends EventDetails implements Serializable {
 	
 	@Column(nullable = false) 
 	private String type;
-	private String secription;
+	private String description;
 	
 	public Event() {
 		
@@ -28,15 +28,15 @@ public class Event extends EventDetails implements Serializable {
 	public void setType(String type) {
 		this.type = type;
 	}
-	public String getSecription() {
-		return secription;
+	public String getDescription() {
+		return description;
 	}
-	public void setSecription(String secription) {
-		this.secription = secription;
+	public void setDescriptionn(String description) {
+		this.description = description;
 	}
 	@Override
 	public String toString() {
-		return "Event [type=" + type + ", secription=" + secription + "]";
+		return "Event [type=" + type + ", description=" + description + "]";
 	}
 	
 	

@@ -31,11 +31,28 @@ public class Comment  implements Serializable{
 	
 	@JsonIgnore
 	@ManyToOne
-	@JoinColumn(name="event_id")
+	@JoinColumn(name="eventId")
 	private Event event;
+	
+	@JsonIgnore
+	@ManyToOne
+	@JoinColumn(name="userId")
+	private User user;
 	
 	public Comment() {
 		
+	}
+	
+	public Comment addRelationShip(Object object) {
+		
+		if(object instanceof User) {
+			this.user = (User)object;
+			return this;
+		}
+		
+		this.event = (Event)object;
+		return this;
+			
 	}
 
 	public long getId() {
@@ -74,6 +91,26 @@ public class Comment  implements Serializable{
 	public void setEvent(Event event) {
 		this.event = event;
 	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public Event getEvent() {
+		return event;
+	}
+
+	@Override
+	public String toString() {
+		return "Comment [commentId=" + commentId + ", comment=" + comment + ", calendarTimestamp=" + calendarTimestamp
+				+ ", event=" + event + ", user=" + user + "]";
+	}
+	
+	
 	
 
 

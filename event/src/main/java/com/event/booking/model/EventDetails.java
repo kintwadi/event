@@ -1,6 +1,5 @@
 package com.event.booking.model;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -47,19 +46,41 @@ public class EventDetails {
 	
 	@JsonIgnore
 	@ManyToOne
-	@JoinColumn(name="user_id")
+	@JoinColumn(name="userId")
 	private User user;
-	
-	                                                            
+
+	@JsonIgnore
 	@OneToMany(mappedBy ="event", fetch=FetchType.EAGER, cascade=CascadeType.ALL)      
 	@Fetch(value = FetchMode.SUBSELECT)                                               
-	private List<Comment>comments = new ArrayList<>();                                
+	private List<Image>images = new ArrayList<>(); 
 	
-	                                                            
+	@JsonIgnore                                                            
 	@OneToMany(mappedBy ="event", fetch=FetchType.EAGER, cascade=CascadeType.ALL)      
 	@Fetch(value = FetchMode.SUBSELECT)                                               
-	private List<Image>images = new ArrayList<>();  
+	private List<Comment>comments = new ArrayList<>();   
+	
+	@JsonIgnore
+	@OneToMany(mappedBy ="event", fetch=FetchType.EAGER, cascade=CascadeType.ALL)      
+	@Fetch(value = FetchMode.SUBSELECT)                                               
+	private List<Like>likes = new ArrayList<>(); 
+	
+	@JsonIgnore
+	@OneToMany(mappedBy ="event", fetch=FetchType.EAGER, cascade=CascadeType.ALL)      
+	@Fetch(value = FetchMode.SUBSELECT)                                               
+	private List<JoinEvent>joiningEvent = new ArrayList<>();  
     
+	public List<JoinEvent> getJoiningEvent() {
+		return joiningEvent;
+	}
+
+
+
+	public void setJoiningEvent(List<JoinEvent> joiningEvent) {
+		this.joiningEvent = joiningEvent;
+	}
+
+
+
 	public EventDetails() {
 		
 	}
@@ -151,6 +172,10 @@ public class EventDetails {
 	public void setComments(List<Comment> comments) {
 		this.comments = comments;
 	}
+
+
+
+	
 
 
 
@@ -283,6 +308,20 @@ public class EventDetails {
 	public void setCurrencyCode(String currencyCode) {
 		this.currencyCode = currencyCode;
 	}
+	
+	
+
+
+
+	public List<Like> getLikes() {
+		return likes;
+	}
+
+
+
+	public void setLikes(List<Like> likes) {
+		this.likes = likes;
+	}
 
 
 
@@ -292,7 +331,8 @@ public class EventDetails {
 				+ ", reference=" + reference + ", lat=" + lat + ", longe=" + longe + ", date=" + date + ", month="
 				+ month + ", day=" + day + ", hour=" + hour + ", minuts=" + minuts + ", seconds=" + seconds + ", start="
 				+ start + ", end=" + end + ", price=" + price + ", currencyCode=" + currencyCode + ", user=" + user
-				+ ", comments=" + comments + ", images=" + images + "]";
+				+ ", images=" + images + ", comments=" + comments + ", likes=" + likes + ", joiningEvent="
+				+ joiningEvent + "]";
 	}
 	
 	

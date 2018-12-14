@@ -51,7 +51,7 @@ public class EventBookingController {
 		model.addAttribute("msg", response.getMessage());
 		return response.getView();
 	}
-
+	
 	@PostMapping("/update_user")
 	public String updateUser(@RequestBody User user,Model model) {
 
@@ -93,7 +93,7 @@ public class EventBookingController {
 		return (User)service.getElementByFieldName("User", "email", email).getResponseData();
 	}
 
-	//Events
+	//EventsJoinEvent
 	@PostMapping("/register_event/{eventOwnerEmail:.+}")
 	@ResponseBody
 	public String registerEvent(@RequestBody Event event,@PathVariable("eventOwnerEmail")String eventOwnerEmail, Model model) {

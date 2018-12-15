@@ -25,6 +25,7 @@ import org.springframework.context.annotation.PropertySources;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 import com.event.booking.dao.IEventBookingDao;
+import com.event.booking.model.Comment;
 import com.event.booking.model.Event;
 import com.event.booking.model.JoinEvent;
 import com.event.booking.model.User;
@@ -302,6 +303,17 @@ public class EventBookingService {
 	    	joinEvent.setHour(String.valueOf(hour));
 	    	joinEvent.setMinuts(String.valueOf(minuts));
 	    	joinEvent.setSeconds(String.valueOf(seconds));
+	    	
+	    }
+	    if(object instanceof Comment) {
+	    	
+	    	Comment comment = (Comment) object;
+	    	comment.setDate(date);
+	    	comment.setMonth(month.name());
+	    	comment.setDay(String.valueOf(day));
+	    	comment.setHour(String.valueOf(hour));
+	    	comment.setMinuts(String.valueOf(minuts));
+	    	comment.setSeconds(String.valueOf(seconds));
 	    	
 	    }
 		

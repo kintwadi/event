@@ -45,6 +45,18 @@ public class Like implements Serializable{
 	public Like(){
 		
 	}
+	
+	public Like addRelationShip(Object object) {
+
+		if(object instanceof User) {
+			this.user = (User)object;
+			return this;
+		}
+
+		this.event = (Event)object;
+		return this;
+
+	}
 
 	public long getLikeId() {
 		return likeId;

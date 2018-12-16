@@ -24,7 +24,7 @@ public class JoinEvent implements Serializable {
 	@Id
 	@GeneratedValue
 	private long joinEventId;
-	private double longe; 
+
 	@Temporal(TemporalType.DATE)
 	private Date date;
 	private String month;
@@ -66,13 +66,6 @@ public class JoinEvent implements Serializable {
 		this.joinEventId = joinEventId;
 	}
 
-	public double getLonge() {
-		return longe;
-	}
-
-	public void setLonge(double longe) {
-		this.longe = longe;
-	}
 
 	public Date getDate() {
 		return date;
@@ -140,9 +133,9 @@ public class JoinEvent implements Serializable {
 
 	@Override
 	public String toString() {
-		return "JoinEvent [joinEventId=" + joinEventId + ", longe=" + longe + ", date=" + date + ", month=" + month
-				+ ", day=" + day + ", hour=" + hour + ", minuts=" + minuts + ", seconds=" + seconds + ", event=" + event
-				+ ", user=" + user + "]";
+		return "JoinEvent [joinEventId=" + joinEventId + ", date=" + date + ", month=" + month + ", day=" + day
+				+ ", hour=" + hour + ", minuts=" + minuts + ", seconds=" + seconds + ", event=" + event + ", user="
+				+ user + "]";
 	}
 
 

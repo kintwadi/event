@@ -120,28 +120,30 @@ public class EventBookingController {
 		return response.getView();
 	}
 	
-	@PostMapping("/join_event/{userId}/{eventId}")
+	@PostMapping("/join_event/{id}/{eventId}/{userId}")
 	@ResponseBody
-	public String joinEvent(@RequestBody JoinEvent joinEvent,@PathVariable long userId, @PathVariable long eventId) {
+	public String joinEvent(@RequestBody JoinEvent joinEvent,@PathVariable long id,@PathVariable long eventId,@PathVariable long userId) {
 		
 		
 		user = (User)service.getById(user, userId);
 		event = (Event)service.getById(event, eventId);
+		joinEvent.setJoinEventId(id);
 		joinEvent.addRelationShip(user).addRelationShip(event);		
-		Response response = service.joinEnvent(joinEvent);
+		Response response = service.joinEvent(joinEvent);
 		
 		return response.getMessage();
 	}
 	
-	@PostMapping("/book_event/{userId}/{eventId}")
+	@PostMapping("/book_event/{id}/{eventId}/{userId}")
 	@ResponseBody
-	public String bookEvent(@RequestBody JoinEvent joinEvent,@PathVariable long userId, @PathVariable long eventId) {
+	public String bookEvent(@RequestBody JoinEvent joinEvent,@PathVariable long id,@PathVariable long eventId,@PathVariable long userId) {
 		
 		
 		user = (User)service.getById(user, userId);
 		event = (Event)service.getById(event, eventId);
+		joinEvent.setJoinEventId(id);
 		joinEvent.addRelationShip(user).addRelationShip(event);		
-		Response response = service.joinEnvent(joinEvent);
+		Response response = service.bookEvent(joinEvent);
 		
 		return response.getMessage();
 	}

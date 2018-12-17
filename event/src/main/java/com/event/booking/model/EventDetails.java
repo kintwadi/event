@@ -30,6 +30,7 @@ public class EventDetails {
 	private String city;
 	private String street;
 	private String reference;
+	private int seats;
 	private double lat;
 	private double longe; 
 	@Temporal(TemporalType.DATE)
@@ -86,6 +87,18 @@ public class EventDetails {
 	}
 	
 	
+
+	public int getSeats() {
+		return seats;
+	}
+
+
+
+	public void setSeats(int seats) {
+		this.seats = seats;
+	}
+
+
 
 	public long getEventId() {
 		return eventId;
@@ -328,11 +341,11 @@ public class EventDetails {
 	@Override
 	public String toString() {
 		return "EventDetails [eventId=" + eventId + ", country=" + country + ", city=" + city + ", street=" + street
-				+ ", reference=" + reference + ", lat=" + lat + ", longe=" + longe + ", date=" + date + ", month="
-				+ month + ", day=" + day + ", hour=" + hour + ", minuts=" + minuts + ", seconds=" + seconds + ", start="
-				+ start + ", end=" + end + ", price=" + price + ", currencyCode=" + currencyCode + ", user=" + user
-				+ ", images=" + images + ", comments=" + comments + ", likes=" + likes + ", joiningEvent="
-				+ joiningEvent + "]";
+				+ ", reference=" + reference + ", seats=" + seats + ", lat=" + lat + ", longe=" + longe + ", date="
+				+ date + ", month=" + month + ", day=" + day + ", hour=" + hour + ", minuts=" + minuts + ", seconds="
+				+ seconds + ", start=" + start + ", end=" + end + ", price=" + price + ", currencyCode=" + currencyCode
+				+ ", user=" + user + ", images=" + images + ", comments=" + comments + ", likes=" + likes
+				+ ", joiningEvent=" + joiningEvent + "]";
 	}
 	
 	

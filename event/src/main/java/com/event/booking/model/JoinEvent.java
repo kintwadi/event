@@ -24,7 +24,10 @@ public class JoinEvent implements Serializable {
 	@Id
 	@GeneratedValue
 	private long joinEventId;
-
+	
+	private boolean paid;
+	private int bookingCountDays;
+	
 	@Temporal(TemporalType.DATE)
 	private Date date;
 	private String month;
@@ -130,12 +133,25 @@ public class JoinEvent implements Serializable {
 	public void setUser(User user) {
 		this.user = user;
 	}
+	
 
+	public boolean isPaid() {
+		return paid;
+	}
+	public void setPaid(boolean paid) {
+		this.paid = paid;
+	}
+	public int getBookingCountDays() {
+		return bookingCountDays;
+	}
+	public void setBookingCountDays(int bookingCountDays) {
+		this.bookingCountDays = bookingCountDays;
+	}
 	@Override
 	public String toString() {
-		return "JoinEvent [joinEventId=" + joinEventId + ", date=" + date + ", month=" + month + ", day=" + day
-				+ ", hour=" + hour + ", minuts=" + minuts + ", seconds=" + seconds + ", event=" + event + ", user="
-				+ user + "]";
+		return "JoinEvent [joinEventId=" + joinEventId + ", paid=" + paid + ", bookingCountDays=" + bookingCountDays
+				+ ", date=" + date + ", month=" + month + ", day=" + day + ", hour=" + hour + ", minuts=" + minuts
+				+ ", seconds=" + seconds + ", event=" + event + ", user=" + user + "]";
 	}
 
 

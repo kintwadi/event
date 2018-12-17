@@ -1,22 +1,16 @@
 package com.event.booking.service;
 
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 
-import org.apache.commons.collections.map.HashedMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -24,6 +18,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.PropertySources;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
+
 import com.event.booking.dao.IEventBookingDao;
 import com.event.booking.model.Comment;
 import com.event.booking.model.Event;
@@ -113,7 +108,7 @@ public class EventBookingService {
 
 		return response;
 	}
-	
+
 	public Response removeUser(User user) {
 
 
@@ -154,8 +149,8 @@ public class EventBookingService {
 	}
 
 	public Response getUsers(User user){
-		
-		
+
+
 		List<Object> users = dao.getAll(user);
 		response.setReponseDataList(users);
 		response.setMessage("list of users");
@@ -184,147 +179,178 @@ public class EventBookingService {
 		}
 
 	}
-	
+
 	public Response addEvent(User user,Event event) {
-		
+
 
 		if(!userExist(user,user.getEmail())) {
-			
-			
+
+
 			response.setStatus("user for this event  does not exist");
 			return response;
 		}
 		try {
-			
+
 			user = (User) dao.getByEmail(user, user.getEmail());
-			
+
 			List<Event> events = new ArrayList<>();
-		
+
 			buildTransactionPedriod(event);// fill date, day ,hour etc...
-		
+
 			events.add(event);
-			
+
 			user.setEvents(events);
-			
+
 			event.setUser(user);
-			
+
 			dao.add(event);	
-			
+
 			response.setStatus("event added");
-			
+
 		} catch (Response e) {
-		
+
 			e.printStackTrace();
 		}
 		return response;
 	}
-	
+
 	public Response updateEvent(Event event) {
 		dao.update(event);
 		response.setStatus("event updated");
 		return response;
 	}
-	
+
 	public Response deleteEvent(Event event) {
 		dao.remove(event);
 		response.setStatus("event added");
 		return response;
 	}
-	
+
 	public Response getElementByFieldName(String className,String field, String value) {
-		
+
 		response.setResponseData(dao.getElementByFieldName(className, field, value));
 		response.setStatus("success");
 		return response;
-		
+
 	}
-	
+
 	public Object getById(Object object,long id) {
 		return  dao.getById(object, id);
 	}
-	
-	
+
+
 	private boolean userExist(User user, String eventOwnerEmail) {
-		
+
 		user = (User)dao.getByEmail(user, eventOwnerEmail);
-	
+
 		return user != null ? true : false;
 	}
-	
-	public Response joinEnvent(JoinEvent joinEvent) {
+
+	public Response joinEvent(JoinEvent joinEvent) {
+
+		buildTransactionPedriod(joinEvent);
+		JoinEvent ob = (JoinEvent)dao.getById(joinEvent,joinEvent.getJoinEventId());
+		try {
+			if(ob != null) {
+
+				dao.update(joinEvent);
+				response.setMessage("event joined on update");
+			}else {
+
+				dao.add(joinEvent);
+				response.setMessage("event joined on create");
+			}
+
+		}catch (Response e ) {
+
+			response.setMessage("error joining event");
+		}
+
+
+		return response;
+	}
+
+	public Response bookEvent(JoinEvent joinEvent) {
+
+		buildTransactionPedriod(joinEvent);
+		JoinEvent ob = (JoinEvent)dao.getById(joinEvent,joinEvent.getJoinEventId());
 		
 		try {
 			
-			buildTransactionPedriod(joinEvent);
-			dao.add(joinEvent);
-			response.setMessage("event joined");
-			
-		} catch (Response e) {
-			
-			System.out.println("error joining event: "+ e.getMessage());
-			response.setMessage(e.getMessage());
-			return response;
+			if(ob != null) {
+				dao.update(joinEvent);
+				response.setMessage("event booked on update");
+			}else {
+
+				dao.add(joinEvent);
+				response.setMessage("event booked on create");
+			}
+
+		}catch (Response e ) {
+
+			response.setMessage("error booking event "+ e.getMessage());
 		}
+
+
 		return response;
 	}
-	
-	
-	
+
+
 	private void buildTransactionPedriod(Object object){
-		
+
 		LocalDateTime currentTime = LocalDateTime.now();
-		
+
 		Month month = currentTime.getMonth();
-	    int day = currentTime.getDayOfMonth();
-	    int hour =currentTime.getHour();
-	    int minuts = currentTime.getMinute();
-	    int seconds = currentTime.getSecond();
-	    Date date = Date.from(currentTime.toLocalDate().atStartOfDay(ZoneId.systemDefault()).toInstant());
-	    
-	    if(object instanceof Event) {
-	    	
-	    	Event event = (Event) object;
-	    	event.setDate(date);
-	    	event.setMonth(month.name());
-	    	event.setDay(String.valueOf(day));
-			
-	    	event.setHour(String.valueOf(hour));
-	    	event.setMinuts(String.valueOf(minuts));
-	    	event.setSeconds(String.valueOf(seconds));
-	    	
-	    }
-	    if(object instanceof JoinEvent) {
-	    	
-	    	JoinEvent joinEvent = (JoinEvent) object;
-	    	joinEvent.setDate(date);
-	    	joinEvent.setMonth(month.name());
-	    	joinEvent.setDay(String.valueOf(day));
-			
-	    	joinEvent.setHour(String.valueOf(hour));
-	    	joinEvent.setMinuts(String.valueOf(minuts));
-	    	joinEvent.setSeconds(String.valueOf(seconds));
-	    	
-	    }
-	    if(object instanceof Comment) {
-	    	
-	    	Comment comment = (Comment) object;
-	    	comment.setDate(date);
-	    	comment.setMonth(month.name());
-	    	comment.setDay(String.valueOf(day));
-	    	comment.setHour(String.valueOf(hour));
-	    	comment.setMinuts(String.valueOf(minuts));
-	    	comment.setSeconds(String.valueOf(seconds));
-	    	
-	    }
-		
-		
+		int day = currentTime.getDayOfMonth();
+		int hour =currentTime.getHour();
+		int minuts = currentTime.getMinute();
+		int seconds = currentTime.getSecond();
+		Date date = Date.from(currentTime.toLocalDate().atStartOfDay(ZoneId.systemDefault()).toInstant());
+
+		if(object instanceof Event) {
+
+			Event event = (Event) object;
+			event.setDate(date);
+			event.setMonth(month.name());
+			event.setDay(String.valueOf(day));
+
+			event.setHour(String.valueOf(hour));
+			event.setMinuts(String.valueOf(minuts));
+			event.setSeconds(String.valueOf(seconds));
+
+		}
+		if(object instanceof JoinEvent) {
+
+			JoinEvent joinEvent = (JoinEvent) object;
+			joinEvent.setDate(date);
+			joinEvent.setMonth(month.name());
+			joinEvent.setDay(String.valueOf(day));
+
+			joinEvent.setHour(String.valueOf(hour));
+			joinEvent.setMinuts(String.valueOf(minuts));
+			joinEvent.setSeconds(String.valueOf(seconds));
+
+		}
+		if(object instanceof Comment) {
+
+			Comment comment = (Comment) object;
+			comment.setDate(date);
+			comment.setMonth(month.name());
+			comment.setDay(String.valueOf(day));
+			comment.setHour(String.valueOf(hour));
+			comment.setMinuts(String.valueOf(minuts));
+			comment.setSeconds(String.valueOf(seconds));
+
+		}
+
+
 	}
-	
-	
-	
-	
-	
-	
+
+
+
+
+
+
 
 
 

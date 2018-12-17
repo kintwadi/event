@@ -36,11 +36,17 @@ public class EventBookingDao implements IEventBookingDao {
 	public void add(Object object) throws Response {
 
 		
+		
+		getSession().clear();
+		getSession().flush();
 		getSession().save(object);
 		
 	}
 	
 	public void update(Object object) {
+		
+		getSession().clear();
+		getSession().flush();
 		getSession().saveOrUpdate(object);
 	}
 
@@ -48,6 +54,8 @@ public class EventBookingDao implements IEventBookingDao {
 	public void remove(Object object) {
 	
 		getSession().delete(object);
+		getSession().clear();
+		getSession().flush();
 		
 	}
 	
@@ -83,6 +91,9 @@ public class EventBookingDao implements IEventBookingDao {
 
 	@Override
 	public Object getById(Object clazz,long id) {
+		
+		getSession().clear();
+		getSession().flush();
 		clazz = getSession().get(clazz.getClass(), id);
 		return  clazz;
 	}
@@ -90,6 +101,8 @@ public class EventBookingDao implements IEventBookingDao {
 	@Override
 	public Object getByEmail(Object clazz, String email) {
 		
+		getSession().clear();
+		getSession().flush();
 		List list = getSession().createCriteria(clazz.getClass()).add(Restrictions.eq("email", email)).list();
 		
 		return list!= null ? list.get(0):  null;
@@ -99,11 +112,15 @@ public class EventBookingDao implements IEventBookingDao {
 	@Override
 	public Object getElementByFieldName(String className, String field, String value) {
 		
+		
 		StringBuilder str = new StringBuilder("From ");
 		str.append(className);
 		str.append(" where ");
 		str.append(field);
 		str.append(" =:"+field);
+		
+		getSession().clear();
+		getSession().flush();
 	
 		Query query  = getSession().createQuery(str.toString());
 		query.setParameter(field,value );

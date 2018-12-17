@@ -30,7 +30,8 @@ public class EventDetails {
 	private String city;
 	private String street;
 	private String reference;
-	private int seats;
+	private int numberOfSeats;
+	private String seatStyle;// banket, classroom etc
 	private double lat;
 	private double longe; 
 	@Temporal(TemporalType.DATE)
@@ -88,14 +89,14 @@ public class EventDetails {
 	
 	
 
-	public int getSeats() {
-		return seats;
+	public int getNumberOfSeats() {
+		return numberOfSeats;
 	}
 
 
 
-	public void setSeats(int seats) {
-		this.seats = seats;
+	public void setNumberOfSeats(int numberOfSeats) {
+		this.numberOfSeats = numberOfSeats;
 	}
 
 
@@ -335,17 +336,31 @@ public class EventDetails {
 	public void setLikes(List<Like> likes) {
 		this.likes = likes;
 	}
+	
+	
+
+
+
+	public String getSeatStyle() {
+		return seatStyle;
+	}
+
+
+
+	public void setSeatStyle(String seatStyle) {
+		this.seatStyle = seatStyle;
+	}
 
 
 
 	@Override
 	public String toString() {
 		return "EventDetails [eventId=" + eventId + ", country=" + country + ", city=" + city + ", street=" + street
-				+ ", reference=" + reference + ", seats=" + seats + ", lat=" + lat + ", longe=" + longe + ", date="
-				+ date + ", month=" + month + ", day=" + day + ", hour=" + hour + ", minuts=" + minuts + ", seconds="
-				+ seconds + ", start=" + start + ", end=" + end + ", price=" + price + ", currencyCode=" + currencyCode
-				+ ", user=" + user + ", images=" + images + ", comments=" + comments + ", likes=" + likes
-				+ ", joiningEvent=" + joiningEvent + "]";
+				+ ", reference=" + reference + ", numberOfSeats=" + numberOfSeats + ", seatStyle=" + seatStyle
+				+ ", lat=" + lat + ", longe=" + longe + ", date=" + date + ", month=" + month + ", day=" + day
+				+ ", hour=" + hour + ", minuts=" + minuts + ", seconds=" + seconds + ", start=" + start + ", end=" + end
+				+ ", price=" + price + ", currencyCode=" + currencyCode + ", user=" + user + ", images=" + images
+				+ ", comments=" + comments + ", likes=" + likes + ", joiningEvent=" + joiningEvent + "]";
 	}
 	
 	

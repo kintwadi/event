@@ -148,9 +148,6 @@ public class EventBookingController {
 		return response.getMessage();
 	}
 	
-	
-	
-	
 	@RequestMapping("/gethome")
 	public String goHome() {
 		

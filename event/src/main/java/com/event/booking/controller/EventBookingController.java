@@ -132,7 +132,7 @@ public class EventBookingController {
 		event = (Event)service.getById(event, eventId);
 		placement = (Placement)service.getById(placement,placementId);
 		joinEvent.setJoinEventId(id);
-		joinEvent.setPlecement(placementId);
+		//joinEvent.setPlecement(placementId);
 		joinEvent.addRelationShip(user).addRelationShip(event);	
 		Response response = service.joinEvent(joinEvent);
 		

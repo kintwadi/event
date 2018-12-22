@@ -46,8 +46,11 @@ public class JoinEvent implements Serializable {
 	@JoinColumn(name="userId")
 	private User user;
 	
-	
-	private long plecement;
+
+	@JsonIgnore
+	@ManyToOne
+	@JoinColumn(name="placementId")
+	private Placement plecement;
 
 	public JoinEvent(){
 
@@ -152,17 +155,18 @@ public class JoinEvent implements Serializable {
 		this.bookingCountDays = bookingCountDays;
 	}
 	
-	public long getPlecement() {
+	
+	public Placement getPlecement() {
 		return plecement;
 	}
-	public void setPlecement(long plecement) {
+	public void setPlecement(Placement plecement) {
 		this.plecement = plecement;
 	}
 	@Override
 	public String toString() {
 		return "JoinEvent [joinEventId=" + joinEventId + ", paid=" + paid + ", bookingCountDays=" + bookingCountDays
 				+ ", date=" + date + ", month=" + month + ", day=" + day + ", hour=" + hour + ", minuts=" + minuts
-				+ ", seconds=" + seconds + ", event=" + event + ", user=" + user + "]";
+				+ ", seconds=" + seconds + ", event=" + event + ", user=" + user + ", plecement=" + plecement + "]";
 	}
 
 

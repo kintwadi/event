@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.event.booking.model.Comment;
 import com.event.booking.model.Event;
 import com.event.booking.model.JoinEvent;
+import com.event.booking.model.Placement;
 import com.event.booking.model.User;
 import com.event.booking.response.Response;
 import com.event.booking.service.EventBookingService;
@@ -32,6 +33,8 @@ public class EventBookingController {
 	private User user;
 	@Autowired
 	private Event event;
+	@Autowired
+	private Placement placement;
 
 	@Autowired
 	private Comment comment;
@@ -120,15 +123,17 @@ public class EventBookingController {
 		return response.getView();
 	}
 	
-	@PostMapping("/join_event/{id}/{eventId}/{userId}")
+	@PostMapping("/join_event/{id}/{eventId}/{userId}/{placementId}")
 	@ResponseBody
-	public String joinEvent(@RequestBody JoinEvent joinEvent,@PathVariable long id,@PathVariable long eventId,@PathVariable long userId) {
+	public String joinEvent(@RequestBody JoinEvent joinEvent,@PathVariable long id,@PathVariable long eventId,@PathVariable long userId,@PathVariable long placementId) {
 		
 		
 		user = (User)service.getById(user, userId);
 		event = (Event)service.getById(event, eventId);
+		placement = (Placement)service.getById(placement,placementId);
 		joinEvent.setJoinEventId(id);
-		joinEvent.addRelationShip(user).addRelationShip(event);		
+		joinEvent.setPlecement(placementId);
+		joinEvent.addRelationShip(user).addRelationShip(event);	
 		Response response = service.joinEvent(joinEvent);
 		
 		return response.getMessage();

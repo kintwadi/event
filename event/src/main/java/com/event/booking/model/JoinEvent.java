@@ -15,7 +15,7 @@ import javax.persistence.TemporalType;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-@Table(name ="JOIN_EVENT")
+@Table(name ="JOINEVENT")
 public class JoinEvent implements Serializable {
 
 
@@ -45,6 +45,9 @@ public class JoinEvent implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="userId")
 	private User user;
+	
+	
+	private long plecement;
 
 	public JoinEvent(){
 
@@ -55,6 +58,7 @@ public class JoinEvent implements Serializable {
 			this.user = (User)object;
 			return this;
 		}
+		
 
 		this.event = (Event)object;
 		return this;
@@ -146,6 +150,13 @@ public class JoinEvent implements Serializable {
 	}
 	public void setBookingCountDays(int bookingCountDays) {
 		this.bookingCountDays = bookingCountDays;
+	}
+	
+	public long getPlecement() {
+		return plecement;
+	}
+	public void setPlecement(long plecement) {
+		this.plecement = plecement;
 	}
 	@Override
 	public String toString() {

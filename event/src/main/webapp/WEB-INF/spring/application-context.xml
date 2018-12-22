@@ -22,6 +22,8 @@
 	<bean id ="eventDetails" class="com.event.booking.model.EventDetails"/>
 	<bean id ="joinEvent" class="com.event.booking.model.JoinEvent"/>
 	<bean id ="like" class="com.event.booking.model.Like"/>
+	<bean id ="placement" class="com.event.booking.model.Placement"/>
+	<bean id ="seat" class="com.event.booking.model.Seat"/>
 	
 	
 	
@@ -36,6 +38,8 @@
 				<value>com.event.booking.model.Comment</value>
 				<value>com.event.booking.model.JoinEvent</value>
 				<value>com.event.booking.model.Like</value>
+				<value>com.event.booking.model.Placement</value>
+				<value>com.event.booking.model.Seat</value>
 				
 			</list>
 		</property>

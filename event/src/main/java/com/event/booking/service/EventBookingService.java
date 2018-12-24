@@ -249,23 +249,10 @@ public class EventBookingService {
 	public Response joinEvent(JoinEvent joinEvent) {
 
 		buildTransactionPedriod(joinEvent);
-		//JoinEvent ob = (JoinEvent)dao.getById(joinEvent,joinEvent.getJoinEventId());
-		try {
-			//if(ob != null) {
+	
 
-				//dao.update(joinEvent);
-				//response.setMessage("event joined on update");
-			//}else {
-
-				dao.add(joinEvent);
-				response.setMessage("event joined on create");
-			//}
-
-		}catch (Response e ) {
-
-			response.setMessage("error joining event");
-		}
-
+			dao.update(joinEvent);
+			response.setMessage("event joined on update");
 
 		return response;
 	}
@@ -274,24 +261,8 @@ public class EventBookingService {
 
 		buildTransactionPedriod(joinEvent);
 		
-		//JoinEvent ob = (JoinEvent)dao.getById(joinEvent,joinEvent.getJoinEventId());
-		
-		try {
-			
-			//if(joinEvent != null) {
-				//dao.update(joinEvent);
-				//response.setMessage("event booked on update");
-			//}else {
-
-				dao.add(joinEvent);
-				response.setMessage("event booked on create");
-			//}
-
-		}catch (Response e ) {
-
-			response.setMessage("error booking event "+ e.getMessage());
-		}
-
+				dao.update(joinEvent);
+				response.setMessage("event booked on update");
 
 		return response;
 	}

@@ -3,11 +3,12 @@ package com.event.booking.model;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.MapsId;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -20,11 +21,30 @@ public class JoinEvent implements Serializable {
 
 
 	private static final long serialVersionUID = 1L;
+
+	@EmbeddedId
+	private JoinEventHelper id;
 	
-	@Id
-	@GeneratedValue
-	private long joinEventId;
+	@JsonIgnore
+	@ManyToOne(fetch = FetchType.LAZY)
+	//@JoinColumn(name="eventId")
+	@MapsId("eventId")
+	private Event event;
+
+	@JsonIgnore
+	@ManyToOne(fetch = FetchType.LAZY)
+	//@JoinColumn(name="userId")
+	@MapsId("userId")
+	private User user;
 	
+
+	@JsonIgnore
+	@ManyToOne(fetch = FetchType.LAZY)
+	//@JoinColumn(name="placementId")
+	@MapsId("placementId")
+	private Placement plecement;
+	
+
 	private boolean paid;
 	private int bookingCountDays;
 	
@@ -35,22 +55,6 @@ public class JoinEvent implements Serializable {
 	private String hour;
 	private String minuts;
 	private String seconds;
-
-	@JsonIgnore
-	@ManyToOne
-	@JoinColumn(name="eventId")
-	private Event event;
-
-	@JsonIgnore
-	@ManyToOne
-	@JoinColumn(name="userId")
-	private User user;
-	
-
-	@JsonIgnore
-	@ManyToOne
-	@JoinColumn(name="placementId")
-	private Placement plecement;
 
 	public JoinEvent(){
 
@@ -68,15 +72,15 @@ public class JoinEvent implements Serializable {
 
 	}
 
-	public long getJoinEventId() {
-		return joinEventId;
+	
+
+
+	public JoinEventHelper getId() {
+		return id;
 	}
-
-	public void setJoinEventId(long joinEventId) {
-		this.joinEventId = joinEventId;
+	public void setId(JoinEventHelper id) {
+		this.id = id;
 	}
-
-
 	public Date getDate() {
 		return date;
 	}
@@ -162,12 +166,7 @@ public class JoinEvent implements Serializable {
 	public void setPlecement(Placement plecement) {
 		this.plecement = plecement;
 	}
-	@Override
-	public String toString() {
-		return "JoinEvent [joinEventId=" + joinEventId + ", paid=" + paid + ", bookingCountDays=" + bookingCountDays
-				+ ", date=" + date + ", month=" + month + ", day=" + day + ", hour=" + hour + ", minuts=" + minuts
-				+ ", seconds=" + seconds + ", event=" + event + ", user=" + user + ", plecement=" + plecement + "]";
-	}
+	
 
 
 

@@ -249,17 +249,17 @@ public class EventBookingService {
 	public Response joinEvent(JoinEvent joinEvent) {
 
 		buildTransactionPedriod(joinEvent);
-		JoinEvent ob = (JoinEvent)dao.getById(joinEvent,joinEvent.getJoinEventId());
+		//JoinEvent ob = (JoinEvent)dao.getById(joinEvent,joinEvent.getJoinEventId());
 		try {
-			if(ob != null) {
+			//if(ob != null) {
 
-				dao.update(joinEvent);
-				response.setMessage("event joined on update");
-			}else {
+				//dao.update(joinEvent);
+				//response.setMessage("event joined on update");
+			//}else {
 
 				dao.add(joinEvent);
 				response.setMessage("event joined on create");
-			}
+			//}
 
 		}catch (Response e ) {
 
@@ -273,18 +273,19 @@ public class EventBookingService {
 	public Response bookEvent(JoinEvent joinEvent) {
 
 		buildTransactionPedriod(joinEvent);
-		JoinEvent ob = (JoinEvent)dao.getById(joinEvent,joinEvent.getJoinEventId());
+		
+		//JoinEvent ob = (JoinEvent)dao.getById(joinEvent,joinEvent.getJoinEventId());
 		
 		try {
 			
-			if(ob != null) {
-				dao.update(joinEvent);
-				response.setMessage("event booked on update");
-			}else {
+			//if(joinEvent != null) {
+				//dao.update(joinEvent);
+				//response.setMessage("event booked on update");
+			//}else {
 
 				dao.add(joinEvent);
 				response.setMessage("event booked on create");
-			}
+			//}
 
 		}catch (Response e ) {
 

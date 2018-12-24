@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.event.booking.model.Comment;
 import com.event.booking.model.Event;
 import com.event.booking.model.JoinEvent;
+import com.event.booking.model.JoinEventHelper;
 import com.event.booking.model.Placement;
 import com.event.booking.model.User;
 import com.event.booking.response.Response;
@@ -35,6 +36,8 @@ public class EventBookingController {
 	private Event event;
 	@Autowired
 	private Placement placement;
+	@Autowired
+	private JoinEventHelper joinEventHelper;
 
 	@Autowired
 	private Comment comment;
@@ -131,7 +134,11 @@ public class EventBookingController {
 		user = (User)service.getById(user, userId);
 		event = (Event)service.getById(event, eventId);
 		placement = (Placement)service.getById(placement,placementId);
-		joinEvent.setJoinEventId(id);
+		
+		joinEventHelper.setEventId(eventId);
+		joinEventHelper.setUserId(userId);
+		joinEventHelper.setPlacementId(placementId);
+		//joinEvent.setJoinEventId(id);
 		//joinEvent.setPlecement(placementId);
 		joinEvent.addRelationShip(user).addRelationShip(event);	
 		Response response = service.joinEvent(joinEvent);
@@ -146,7 +153,7 @@ public class EventBookingController {
 		
 		user = (User)service.getById(user, userId);
 		event = (Event)service.getById(event, eventId);
-		joinEvent.setJoinEventId(id);
+		//joinEvent.setJoinEventId(id);
 		joinEvent.addRelationShip(user).addRelationShip(event);		
 		Response response = service.bookEvent(joinEvent);
 		

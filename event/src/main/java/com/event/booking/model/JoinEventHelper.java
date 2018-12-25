@@ -10,11 +10,14 @@ public class JoinEventHelper  implements Serializable{
 	
 	
 	private static final long serialVersionUID = 1L;
-	@Column(name = "eventId")
+	
+	//@Column(name = "eventId")
 	private long eventId;
-	@Column(name = "userId")
+	
+	//@Column(name = "userId")
 	private long userId;
-	@Column(name = "placementId")
+	
+	//@Column(name = "placementId")
 	private long placementId;
 	
 	

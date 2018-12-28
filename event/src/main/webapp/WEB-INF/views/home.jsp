@@ -6,75 +6,96 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-<link rel="stylesheet" href="/resources/bootstrap4.1.1/bootstrap3/css/bootstrap.min.css">
-<script src="/webapp/resources/bootstrap4.1.1/bootstrap3/js/bootstrap.min.js" ></script>
-<script src="/resources/bootstrap4.1.1/js/popper.min.js" ></script>
-<script src="/resources/bootstrap4.1.1/js/jquery-3.2.1.slim.min.js" ></script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.topnav {
+  overflow: hidden;
+  background-color: #333;
+  
+}
+
+.topnav a {
+  float: left;
+  display: block;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 10px 10px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+.topnav a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+.active {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.topnav .icon {
+  display: none;
+}
+
+@media screen and (max-width: 600px) {
+  .topnav a:not(:first-child) {display: none;}
+  .topnav a.icon {
+    float: right;
+    display: block;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .topnav.responsive {position: relative;}
+  .topnav.responsive .icon {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+  .topnav.responsive a {
+    float: none;
+    display: block;
+    text-align: left;
+  }
+}
+</style>
 </head>
 <body>
 
-<hr>
-<br>
-
-
-
-<div class="card" style="width: 18rem;">
-  <img class="card-img-top" src=".../100px180/" alt="Card image cap">
-  <div class="card-body">
-    <h5 class="card-title">Card title</h5>
-    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-    <a href="#" class="btn btn-primary">Go somewhere</a>
-  </div>
+<div class="topnav" id="myTopnav">
+  <a href="#home" class="active">Home</a>
+  <a href="#news">Concert</a>
+  <a href="#contact">Theather</a>
+  <a href="#about">Cinema</a>
+  <a href="#about">More</a>
+  <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+    <i class="fa fa-bars"></i>
+  </a>
 </div>
 
-<input type="button"  style ="color:red"onclick="listUsers()" value ="buscar usuarios home">
-
- <div id = "conteudo"></div>
- 
- 
- 
- <script>
+<div style="padding-left:16px">
+  <h2>Responsive Topnav Example</h2>
+  <p>Resize the browser window to see how it works.</p>
+</div>
 
 
-
-function listUsers() {
-	
-	
-	  var xhttp = new XMLHttpRequest();
-	  
-	  xhttp.onreadystatechange = function() {
-	    if (this.readyState == 4 && this.status == 200) {
-	    	
-	    	   var conteudo = document.getElementById("conteudo");
-	    	   
-	    	    var data = JSON.parse(this.responseText);
-	    	    console.log(this.responseText);
-	    	    for(let i = 0; i < data.length; i++){
-	    	    	
-	    	    	conteudo.innerHTML +=" <br> nome: "+ data[i]["userName"] ;
-	  	    	    conteudo.innerHTML +=" <br> email: "+ data[i]["email"] ;
-	  	    	    conteudo.innerHTML +="<br> password: "+data[i]["password"] ;
-	  	    	    conteudo.innerHTML +="<br> telef: "+data[i]["cellphone"] ;
-	  	    	    conteudo.innerHTML +="<br> país: "+ data[i]["country"] ;
-	  	    	    conteudo.innerHTML +="<br> provincia: "+ data[i]["city"] ;
-	  	    	    conteudo.innerHTML += "<br> cidade: "+data[i]["street"] ;
-	  	    	  	conteudo.innerHTML += "<hr>" ;
-	    	    	
-	    	    }
-	    	    
-	    	  
-	    }
-	  };
-	  var url = "http://localhost:8181/event/get_users";
-	  xhttp.open("GET", url, true);
-	  xhttp.send();
-	}
-
-
+<script>
+function myFunction() {
+  var x = document.getElementById("myTopnav");
+  if (x.className === "topnav") {
+    x.className += " responsive";
+  } else {
+    x.className = "topnav";
+  }
+}
 </script>
- 
 
 </body>
 </html>

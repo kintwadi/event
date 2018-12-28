@@ -165,7 +165,7 @@ public class EventBookingService {
 
 	public Response getInitPage() {
 		Response response = new Response();
-		response.setView("login");
+		response.setView("home");
 		return response;	
 	}
 
